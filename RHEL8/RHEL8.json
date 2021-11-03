@@ -1,0 +1,35 @@
+{
+    "builders": [{
+      "type": "proxmox",
+      "proxmox_url": "https://IP:8006/api2/json",
+      "insecure_skip_tls_verify": true,
+      "username": "{{ user `proxmox_username` }}",
+      "password": "{{ user `proxmox_password` }}",
+      "node": "proxmox_host",
+      "network_adapters": [{
+        "bridge": "vmbr0"
+      }],
+      "memory": 10240,
+      "cores": 2,
+      "boot_command": [
+        "<esc><wait>",
+        "vmlinuz initrd=initrd.img inst.geoloc=0 rd.driver.blacklist=dm-multipath net.ifnames=0 biosdevname=0 ",
+        "ks=http://{{.HTTPIP}}:{{.HTTPPort}}/kickstart.cfg",
+        "<enter>"    ],
+      "boot_wait": "3s",
+      "template_name": "RHEL8",
+      "template_description": "RHEL8 Clean",
+      "http_directory": "http",
+      "iso_file": "datastore:iso/rhel-8.4-x86_64-dvd.iso",
+      "disks": [{
+        "type": "virtio",
+        "disk_size": "40",
+        "storage_pool": "storage_pool",
+        "storage_pool_type": "lvm"
+      }],
+      "ssh_password": "ssh_password",
+      "ssh_username": "ssh_username",
+      "ssh_timeout": "40m",
+      "ssh_handshake_attempts": "100"
+      }]
+  }
