@@ -1,0 +1,31 @@
+#cloud-config
+autoinstall:
+  version: 1
+  early-commands:
+    - sudo systemctl stop ssh
+  locale: en_US
+  keyboard:
+    layout: en
+    variant: us
+  identity:
+    hostname: ubuntu_20.04_Clean
+    username: username
+    password: 'hashed password'
+  ssh:
+    install-server: yes
+    allow-pw: yes
+  storage:
+    layout:
+      name: direct
+  apt:
+    primary:
+    - arches: [i386, amd64]
+      uri: "http://ro.archive.ubuntu.com/ubuntu/"
+  user-data:
+   disable_root: false
+  packages:
+    - qemu-guest-agent
+    - net-tools
+  late-commands:
+    - curtin in-target --target=/target -- apt-get update
+    - curtin in-target --target=/target -- apt-get upgrade --yes
