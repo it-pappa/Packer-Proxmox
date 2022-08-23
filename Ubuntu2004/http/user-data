@@ -1,0 +1,30 @@
+#cloud-config
+autoinstall:
+  version: 1
+  early-commands:
+    - sudo systemctl stop ssh
+  locale: en_US
+  keyboard:
+    layout: en
+    variant: us
+  identity:
+    hostname: Ubuntu.20.04
+    username: username
+    password: 'hasked-password'
+  ssh:
+    install-server: yes
+    allow-pw: yes
+    authorized-keys:
+      - ssh-rsa key-string
+  storage:
+    layout:
+      name: direct
+  apt:
+    primary:
+    - arches: [i386, amd64]
+      uri: "http://ro.archive.ubuntu.com/ubuntu/"
+  user-data:
+   disable_root: false
+  packages:
+    - open-vm-tools
+    - cloud-init
