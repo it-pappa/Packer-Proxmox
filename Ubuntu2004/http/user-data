@@ -26,5 +26,5 @@ autoinstall:
   user-data:
    disable_root: false
   packages:
-    - open-vm-tools
+    - qemu-guest-agent
     - cloud-init
